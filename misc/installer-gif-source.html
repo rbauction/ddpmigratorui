@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDP Migrator UI</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+  </head>
+  <body style="margin-top: 100px; background-color: #E47630">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <h4 class="text-center" style="color: white">DDP Migrator UI is being installed ...</h4>
+          <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- .container-fluid -->
+    <script>
+    var perc = 0
+    var delay = 400
+
+    function progress5perc() {
+      if (perc < 100)
+        perc = perc + 10
+      else
+        perc = 0
+
+      $('#progress-bar').width(perc + '%')
+      setTimeout(progress5perc, delay)
+    }
+
+    $(document).ready(function() {
+      console.log('Ready')
+      setTimeout(progress5perc, delay)
+    })
+    </script>
+  </body>
+</html>

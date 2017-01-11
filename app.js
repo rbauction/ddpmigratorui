@@ -6,7 +6,7 @@ const path = require('path')
 const sf = require('node-salesforce')
 const url = require('url')
 
-const config = new Config();
+const config = new Config()
 
 if (require('electron-squirrel-startup')) return
 
@@ -26,6 +26,65 @@ let assetsDir
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
+// this should be placed at top of main.js to handle setup events quickly
+if (handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  return
+}
+
+function handleSquirrelEvent() {
+  if (process.argv.length === 1) {
+    return false
+  }
+
+  const ChildProcess = require('child_process')
+
+  const appFolder = path.resolve(process.execPath, '..')
+  const rootAtomFolder = path.resolve(appFolder, '..')
+  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'))
+  const exeName = path.basename(process.execPath)
+
+  const spawnDetached = function(command, args) {
+    let spawnedProcess, error
+
+    try {
+      spawnedProcess = ChildProcess.spawn(command, args, {detached: true})
+    } catch (error) {}
+
+    return spawnedProcess
+  }
+
+  const spawnUpdate = function(args) {
+    return spawnDetached(updateDotExe, args)
+  }
+
+  const squirrelEvent = process.argv[1]
+  switch (squirrelEvent) {
+    case '--squirrel-install':
+    case '--squirrel-updated':
+      // Install desktop and start menu shortcuts
+      spawnUpdate(['--createShortcut', exeName])
+
+      setTimeout(app.quit, 1000)
+      return true
+
+    case '--squirrel-uninstall':
+      // Remove desktop and start menu shortcuts
+      spawnUpdate(['--removeShortcut', exeName])
+
+      setTimeout(app.quit, 1000)
+      return true
+
+    case '--squirrel-obsolete':
+      // This is called on the outgoing version of your app before
+      // we update to the new version - it's the opposite of
+      // --squirrel-updated
+
+      app.quit()
+      return true
+  }
+}
+
 function startApp() {
   resolveAssetsPath()
   createWindow()
@@ -39,8 +98,6 @@ function createWindow() {
     minWidth: 780,
     minHeight: 400
   })
-  // Hide menu bar
-  //win.setMenu(null);
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -192,8 +249,8 @@ ipcMain.on('get-remote-ddps-message', (event) => {
 
 function getDirectories(dirName) {
   return fs.readdirSync(dirName).filter(function(file) {
-    return fs.statSync(path.join(dirName, file)).isDirectory();
-  });
+    return fs.statSync(path.join(dirName, file)).isDirectory()
+  })
 }
 
 //

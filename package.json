@@ -1,0 +1,27 @@
+{
+  "name": "ddpmigratorui",
+  "productName": "DDP Migrator UI",
+  "description": "User interface for DDP Migrator",
+  "version": "0.1.0",
+  "ddpmigrator-version": "0.2.4",
+  "main": "app.js",
+  "scripts": {
+    "start": "gulp dev",
+    "pack:win": "./node_modules/.bin/electron-packager . %npm_package_productName% --platform=win32 --arch=x64 --overwrite --app-version=%npm_package_version% --out=builds --ignore=builds --ignore=gulpfile.js --ignore=package.json --version-string.FileDescription=%npm_package_description% --version-string.OriginalFilename='DDPMigratorUI.exe' --version-string.InternalName=%npm_package_productName% --version-string.ProductName=%npm_package_productName% --version-string.ProductVersion=%npm_package_version%",
+    "package": "npm run pack:win && gulp package"
+  },
+  "dependencies": {
+    "electron": "^1.4.13",
+    "electron-config": "^0.2.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "node-salesforce": "^0.8.0"
+  },
+  "devDependencies": {
+    "electron-connect": "^0.6.1",
+    "electron-packager": "^8.4.0",
+    "electron-winstaller": "^2.5.1",
+    "gulp": "^3.9.1",
+    "gulp-download": "0.0.1",
+    "gulp-rename": "^1.2.2"
+  }
+}

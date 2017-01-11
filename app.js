@@ -60,7 +60,8 @@ function handleSquirrelEvent() {
     case '--squirrel-install':
     case '--squirrel-updated':
       // Install desktop and start menu shortcuts
-      spawnUpdate(['--createShortcut', exeName])
+      var iconPath = path.join(__dirname, '/images/ddp-256x256.ico')
+      spawnUpdate(['--createShortcut', `--icon=${iconPath}`, exeName])
 
       setTimeout(app.quit, 1000)
       return true

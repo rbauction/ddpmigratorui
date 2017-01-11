@@ -9,5 +9,5 @@ User interface for DDP Migrator
 
 ## Releasing new version
 
-* Run ```npm run release```
+* Run ```npm run release``` or ```gulp release```
 * Upload **exe** or **msi** file or both to **releases** tab of this project

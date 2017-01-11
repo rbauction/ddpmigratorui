@@ -112,7 +112,8 @@ function refreshListOfLocalDdps(callback) {
   ipcRenderer.send('get-local-ddps-message', localDir)
 }
 
-function pullOrPushDdps(ddps, messageChannelName, replyChannelName) {
+function pullOrPushDdps(ddps, messageChannelName, replyChannelName, callback) {
+  callback = callback || function () {}
   var dmExitcode = $('#ddpMigratorExitcode')
   ipcRenderer.removeAllListeners(replyChannelName)
   ipcRenderer.on(replyChannelName, (event, err, exitcode, stdout) => {
@@ -162,7 +163,11 @@ function collectSelectedDdps(tbodyId, callback) {
 }
 
 function pullDdps(ddps) {
-  pullOrPushDdps(ddps, 'pull-ddps-message', 'pull-ddps-reply')
+  pullOrPushDdps(ddps, 'pull-ddps-message', 'pull-ddps-reply', function() {
+    $('#localDdpFilter').val('')
+    $('#local-all-ddps-checkbox').prop('checked', false)
+    refreshListOfLocalDdps()
+  })
 }
 
 function pullOneDdp(ddpName) {
@@ -174,7 +179,11 @@ function pullSelectedDdps() {
 }
 
 function pushDdps(ddps) {
-  pullOrPushDdps(ddps, 'push-ddps-message', 'push-ddps-reply')
+  pullOrPushDdps(ddps, 'push-ddps-message', 'push-ddps-reply', function () {
+    $('#remoteDdpFilter').val('')
+    $('#remote-all-ddps-checkbox').prop('checked', false)
+    refreshListOfRemoteDdps()
+  })
 }
 
 function pushOneDdp(ddpName) {

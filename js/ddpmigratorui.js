@@ -129,8 +129,10 @@ function pullOrPushDdps(ddps, messageChannelName, replyChannelName, callback) {
         dmExitcode.addClass('alert-danger')
       }
       dmExitcode.find('span').text(`Exit code: ${exitcode}`)
-      callback(null)
-      $('#ddpMigratorModal').modal('hide')
+      callback(err)
+      // Dismiss modal window if execution was successful
+      if (!err)
+        $('#ddpMigratorModal').modal('hide')
       return
     } else {
       var dmOutput = $('#ddpMigratorOutput')

@@ -62,7 +62,7 @@ function resolveAssetsPath() {
   if (fs.existsSync('./resources/app/assets'))
     assetsDir = './resources/app/assets'
   else if (fs.existsSync('./assets'))
-    assets = './assets'
+    assetsDir = './assets'
   else
     throw Error('Could not find neither ./resources/app/assets nor ./assets directory. Current directory: ' + process.cwd())
 }

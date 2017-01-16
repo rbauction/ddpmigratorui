@@ -3,7 +3,7 @@
   "productName": "DDP Migrator UI",
   "description": "User interface for DDP Migrator",
   "version": "0.1.1",
-  "ddpmigrator-version": "0.2.4",
+  "ddpmigrator-version": "0.2.5",
   "main": "app.js",
   "scripts": {
     "start": "gulp dev",

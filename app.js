@@ -149,7 +149,7 @@ ipcMain.on('open-repo-message', (event) => {
 //
 ipcMain.on('pull-ddps-message', (event, ddps) => {
   var sandboxSwitch = sfIsSandbox ? '--sandbox' : ''
-  var cmd = path.join(assetsDir, 'ddpmigrator.exe')
+  var cmd = path.join(__dirname, 'assets', 'ddpmigrator.exe')
   var args = ['export', sandboxSwitch, '-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d']
   for (var i in ddps)
     args.push(ddps[i])
@@ -174,7 +174,7 @@ ipcMain.on('pull-ddps-message', (event, ddps) => {
 //
 ipcMain.on('push-ddps-message', (event, ddps) => {
   var sandboxSwitch = sfIsSandbox ? '--sandbox' : ''
-  var cmd = path.join(assetsDir, 'ddpmigrator.exe')
+  var cmd = path.join(__dirname, 'assets', 'ddpmigrator.exe')
   var args = ['import', sandboxSwitch, '-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d']
   for (var i in ddps)
     args.push(ddps[i])

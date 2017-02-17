@@ -148,11 +148,14 @@ ipcMain.on('open-repo-message', (event) => {
 
 //
 ipcMain.on('pull-ddps-message', (event, ddps) => {
-  var sandboxSwitch = sfIsSandbox ? '--sandbox' : ''
   var cmd = path.join(__dirname, 'assets', 'ddpmigrator.exe')
-  var args = ['export', sandboxSwitch, '-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d']
+  var args = ['export']
+  if (sfIsSandbox)
+    args.push('--sandbox')
+  args.push('-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d')
   for (var i in ddps)
     args.push(ddps[i])
+  console.log(args)
   var ddpmigrator = spawn(cmd, args)
 
   ddpmigrator.stdout.on('data', (data) => {
@@ -173,9 +176,11 @@ ipcMain.on('pull-ddps-message', (event, ddps) => {
 
 //
 ipcMain.on('push-ddps-message', (event, ddps) => {
-  var sandboxSwitch = sfIsSandbox ? '--sandbox' : ''
   var cmd = path.join(__dirname, 'assets', 'ddpmigrator.exe')
-  var args = ['import', sandboxSwitch, '-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d']
+  var args = ['import']
+  if (sfIsSandbox)
+    args.push('--sandbox')
+  args.push('-u', sfUsername, '-p', sfPassword, '-s', sourceDir, '-d')
   for (var i in ddps)
     args.push(ddps[i])
   var ddpmigrator = spawn(cmd, args)

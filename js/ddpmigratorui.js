@@ -131,7 +131,7 @@ function pullOrPushDdps(ddps, messageChannelName, replyChannelName, callback) {
       dmExitcode.find('span').text(`Exit code: ${exitcode}`)
       callback(err)
       // Dismiss modal window if execution was successful
-      if (!err)
+      if (exitcode == 0)
         $('#ddpMigratorModal').modal('hide')
       return
     } else {

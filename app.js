@@ -141,9 +141,9 @@ Error.prototype.toJSON = function() {
 
 //
 ipcMain.on('open-repo-message', (event) => {
-  var srcDir = dialog.showOpenDialog({properties: ['openDirectory']})[0]
-  config.set('lastSourceDir', srcDir)
-  event.sender.send('open-repo-reply', srcDir)
+  sourceDir = dialog.showOpenDialog({properties: ['openDirectory']})[0]
+  config.set('lastSourceDir', sourceDir)
+  event.sender.send('open-repo-reply', sourceDir)
 })
 
 //
@@ -245,7 +245,12 @@ function getDirectories(dirName) {
 
 //
 ipcMain.on('get-local-ddps-message', (event, dirName) => {
-  var ddps = getDirectories(path.join(dirName, 'loop', 'data'))
+  var loopDir = path.join(dirName, 'loop')
+  var dataDir = path.join(loopDir, 'data')
+  if (fs.existsSync(loopDir) && fs.existsSync(dataDir))
+    var ddps = getDirectories(dataDir)
+  else
+    var ddps = []
   event.sender.send('get-local-ddps-reply', null, ddps)
 })
 

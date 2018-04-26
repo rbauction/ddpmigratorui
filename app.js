@@ -204,7 +204,7 @@ ipcMain.on('push-ddps-message', (event, ddps) => {
 //
 ipcMain.on('log-in-salesforce-message', (event, sfdcUsername, sfdcPassword, isProduction) => {
   if (isProduction)
-    var loginUrl = 'https://www.salesforce.com'
+    var loginUrl = 'https://login.salesforce.com'
   else
     var loginUrl = 'https://test.salesforce.com'
   sfConn = new sf.Connection({loginUrl : loginUrl})

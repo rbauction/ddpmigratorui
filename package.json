@@ -11,7 +11,7 @@
     "release": "gulp release"
   },
   "dependencies": {
-    "electron": "^1.4.13",
+    "electron": "^9.4.0",
     "electron-config": "^0.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "node-salesforce": "^0.8.0"
